@@ -1,0 +1,92 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.18.0.0
+Copyright (C) 2016 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Zouziwei Zouziwei, ÈüÅµèó, LIC=14HKP-ME7KP-FIF52-9K1Y3-X0RQ3-CHNMC
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Standard  Version: 5.18
+Toolchain Path:  D:\Install\keil5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 1 (build 61)
+Assembler:       Armasm.exe V5.06 update 1 (build 61)
+Linker/Locator:  ArmLink.exe V5.06 update 1 (build 61)
+Library Manager: ArmAr.exe V5.06 update 1 (build 61)
+Hex Converter:   FromElf.exe V5.06 update 1 (build 61)
+CPU DLL:         SARMCM3.DLL V5.18
+Dialog DLL:      DARMSTM.DLL V1.65.0.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
+Dialog DLL:      TCM.DLL V1.14.8.0
+ 
+<h2>Project:</h2>
+C:\Users\Cynovan\Documents\Tencent Files\1914381706\FileRecv\2020.10.19 CW & CCW Rotor STM32F103VET6\STM32F103VET6\MDK-ARM\STM32F103VET6.uvprojx
+Project File Date:  10/20/2020
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 1 (build 61)', folder: 'D:\Install\keil5\ARM\ARMCC\Bin'
+Build target 'STM32F103VET6'
+compiling main.c...
+../Src/main.c(2895): warning:  #177-D: variable "errorcode" was declared but never referenced
+  				char errorcode[40] = {0};
+../Src/main.c(4395): warning:  #177-D: variable "usbdis" was declared but never referenced
+  	char usbdis[20];
+../Src/main.c(4521): warning:  #940-D: missing return statement at end of non-void function "writeUDisk"
+  }
+../Src/main.c(85): warning:  #177-D: variable "Mid" was declared but never referenced
+  static int16_t Mid = 0;
+../Src/main.c(146): warning:  #177-D: variable "bFill" was declared but never referenced
+  static uint8_t bFill = true;
+../Src/main.c(147): warning:  #177-D: variable "Fill_Time" was declared but never referenced
+  static uint32_t Fill_Time = 0;
+../Src/main.c(165): warning:  #177-D: variable "time_out" was declared but never referenced
+  static uint8_t time_out = 0;
+../Src/main.c(166): warning:  #177-D: variable "smalla" was declared but never referenced
+  static uint8_t smalla = 0;
+../Src/main.c(167): warning:  #177-D: variable "wendtime" was declared but never referenced
+  static uint8_t wendtime = 0;
+../Src/main.c(169): warning:  #177-D: variable "lp" was declared but never referenced
+  static uint8_t lp = 0;
+../Src/main.c(170): warning:  #177-D: variable "f_timeout" was declared but never referenced
+  static uint8_t f_timeout = 0;
+../Src/main.c(183): warning:  #177-D: variable "minadc" was declared but never referenced
+  static uint16_t minadc = 336;
+../Src/main.c(188): warning:  #177-D: variable "delaysd1" was declared but never referenced
+  static uint16_t delaysd1 = 1500;
+../Src/main.c(190): warning:  #177-D: variable "delaysd1_2" was declared but never referenced
+  static uint16_t delaysd1_2 = 1500;
+../Src/main.c(192): warning:  #177-D: variable "yuanbenw" was declared but never referenced
+  static uint16_t yuanbenw = 0;
+../Src/main.c(201): warning:  #550-D: variable "zerofinish" was set but never used
+  static uint8_t zerofinish = 0;
+../Src/main.c(213): warning:  #550-D: variable "realweight" was set but never used
+  static float realweight = 0;
+../Src/main.c(219): warning:  #550-D: variable "errorcode_0" was set but never used
+  static uint8_t errorcode_0 = 0;
+../Src/main.c: 18 warnings, 0 errors
+linking...
+Program Size: Code=104624 RO-data=3464 RW-data=1268 ZI-data=41132  
+FromELF: creating hex file...
+"STM32F103VET6\STM32F103VET6.axf" - 0 Error(s), 18 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.4.5.0.pack
+                ARM::CMSIS:CORE:4.3.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 4.3.0
+
+<h2>Collection of Component include folders:</h2>
+  C:\Users\Cynovan\Documents\Tencent Files\1914381706\FileRecv\2020.10.19 CW & CCW Rotor STM32F103VET6\STM32F103VET6\MDK-ARM\RTE
+  D:\Install\keil5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include
+  D:\Install\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:4.3.0
+Build Time Elapsed:  00:00:07
+</pre>
+</body>
+</html>

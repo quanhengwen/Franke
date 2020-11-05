@@ -1,0 +1,261 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * File Name          : freertos.c
+  * Description        : Code for freertos applications
+  ******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+
+/* Includes ------------------------------------------------------------------*/
+#include "FreeRTOS.h"
+#include "task.h"
+#include "main.h"
+#include "cmsis_os.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */     
+
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+/* USER CODE BEGIN Variables */
+
+/* USER CODE END Variables */
+osThreadId Data_RX_TX_TaskHandle;
+osThreadId TempShowaskHandle;
+osThreadId FreezeTaskHandle;
+osThreadId DefrostTaskHandle;
+osThreadId DeviceCheckTaskHandle;
+
+/* Private function prototypes -----------------------------------------------*/
+/* USER CODE BEGIN FunctionPrototypes */
+   
+/* USER CODE END FunctionPrototypes */
+
+void StartData_RX_TX_Task(void const * argument);
+void StartTempShowask(void const * argument);
+void StartFreezeTask(void const * argument);
+void StartDefrostTask(void const * argument);
+void StartDeviceCheckTask(void const * argument);
+
+void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+
+/* Hook prototypes */
+void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName);
+
+/* USER CODE BEGIN 4 */
+__weak void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
+{
+   /* Run time stack overflow checking is performed if
+   configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2. This hook function is
+   called if a stack overflow is detected. */
+}
+/* USER CODE END 4 */
+
+/**
+  * @brief  FreeRTOS initialization
+  * @param  None
+  * @retval None
+  */
+void MX_FREERTOS_Init(void) {
+  /* USER CODE BEGIN Init */
+       
+  /* USER CODE END Init */
+
+  /* USER CODE BEGIN RTOS_MUTEX */
+  /* add mutexes, ... */
+  /* USER CODE END RTOS_MUTEX */
+
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* add semaphores, ... */
+  /* USER CODE END RTOS_SEMAPHORES */
+
+  /* USER CODE BEGIN RTOS_TIMERS */
+  /* start timers, add new ones, ... */
+  /* USER CODE END RTOS_TIMERS */
+
+  /* USER CODE BEGIN RTOS_QUEUES */
+  /* add queues, ... */
+  /* USER CODE END RTOS_QUEUES */
+
+  /* Create the thread(s) */
+  /* definition and creation of Data_RX_TX_Task */
+  osThreadDef(Data_RX_TX_Task, StartData_RX_TX_Task, osPriorityNormal, 0, 1024);
+  Data_RX_TX_TaskHandle = osThreadCreate(osThread(Data_RX_TX_Task), NULL);
+
+  /* definition and creation of TempShowask */
+  osThreadDef(TempShowask, StartTempShowask, osPriorityNormal, 0, 768);
+  TempShowaskHandle = osThreadCreate(osThread(TempShowask), NULL);
+
+  /* definition and creation of FreezeTask */
+  osThreadDef(FreezeTask, StartFreezeTask, osPriorityNormal, 0, 768);
+  FreezeTaskHandle = osThreadCreate(osThread(FreezeTask), NULL);
+
+  /* definition and creation of DefrostTask */
+  osThreadDef(DefrostTask, StartDefrostTask, osPriorityNormal, 0, 768);
+  DefrostTaskHandle = osThreadCreate(osThread(DefrostTask), NULL);
+
+  /* definition and creation of DeviceCheckTask */
+  osThreadDef(DeviceCheckTask, StartDeviceCheckTask, osPriorityNormal, 0, 1024);
+  DeviceCheckTaskHandle = osThreadCreate(osThread(DeviceCheckTask), NULL);
+
+  /* USER CODE BEGIN RTOS_THREADS */
+  /* add threads, ... */
+  /* USER CODE END RTOS_THREADS */
+
+}
+
+/* USER CODE BEGIN Header_StartData_RX_TX_Task */
+/**
+  * @brief  Function implementing the Data_RX_TX_Task thread.
+  * @param  argument: Not used 
+  * @retval None
+  */
+/* USER CODE END Header_StartData_RX_TX_Task */
+void StartData_RX_TX_Task(void const * argument)
+{
+  /* USER CODE BEGIN StartData_RX_TX_Task */
+  /* Infinite loop */
+  for(;;)
+  {
+  	if(bSystemInitOk)
+  	{
+		//开始串口接发数据(WiFI/蓝牙/LoRa)
+			if(Menu ==0){
+				task_RX_TX(NULL);
+			}
+		
+		}
+    osDelay(1);
+  }
+  /* USER CODE END StartData_RX_TX_Task */
+}
+
+/* USER CODE BEGIN Header_StartTempShowask */
+/**
+* @brief Function implementing the TempShowask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTempShowask */
+void StartTempShowask(void const * argument)
+{
+  /* USER CODE BEGIN StartTempShowask */
+  /* Infinite loop */
+  for(;;)
+  {
+  	if(bSystemInitOk){
+			if(Menu ==0){
+				//开始温度显示
+				task_TempShow(NULL);
+			}
+	}
+    osDelay(1);
+  }
+  /* USER CODE END StartTempShowask */
+}
+
+/* USER CODE BEGIN Header_StartFreezeTask */
+/**
+* @brief Function implementing the FreezeTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartFreezeTask */
+void StartFreezeTask(void const * argument)
+{
+  /* USER CODE BEGIN StartFreezeTask */
+  /* Infinite loop */
+  for(;;)
+  {
+  	if(bSystemInitOk){
+			if(Menu ==0){
+				//冷冻模式
+				task_Freeze(NULL);
+			}
+	}
+    osDelay(1);
+  }
+  /* USER CODE END StartFreezeTask */
+}
+
+/* USER CODE BEGIN Header_StartDefrostTask */
+/**
+* @brief Function implementing the DefrostTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartDefrostTask */
+void StartDefrostTask(void const * argument)
+{
+  /* USER CODE BEGIN StartDefrostTask */
+  /* Infinite loop */
+  for(;;)
+  {
+  	if(bSystemInitOk){
+			if(Menu ==0){
+				//除霜模式
+				task_Defrost(NULL);
+			}
+	}
+    osDelay(1);
+  }
+  /* USER CODE END StartDefrostTask */
+}
+
+/* USER CODE BEGIN Header_StartDeviceCheckTask */
+/**
+* @brief Function implementing the DeviceCheckTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartDeviceCheckTask */
+void StartDeviceCheckTask(void const * argument)
+{
+  /* USER CODE BEGIN StartDeviceCheckTask */
+  /* Infinite loop */
+  for(;;)
+  {
+  	if(bSystemInitOk){
+			//设备自检模式
+			Calibration();
+			task_DeviceCheck(NULL);
+		}
+    osDelay(1);
+  }
+  /* USER CODE END StartDeviceCheckTask */
+}
+
+/* Private application code --------------------------------------------------*/
+/* USER CODE BEGIN Application */
+     
+/* USER CODE END Application */
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
